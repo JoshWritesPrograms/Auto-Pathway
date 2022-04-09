@@ -1,3 +1,20 @@
+# Converts text coppied and pasted from the PDF into
+# a list of raw coords to be decoded.
+
+def generate_h_dots(raw_text: str) -> list:
+    h_dots = []
+
+    raw_text.strip('\n')
+    h_dots.append(raw_text.split('yd ln'))
+    return h_dots
+
+def generate_v_dots(raw_text: str) -> list:
+    v_dots = []
+
+    raw_text.strip('\n')
+    v_dots.append(raw_text.split('(HS)'))
+    return v_dots
+
 # Extracts the numbers from a string
 
 def extract_numbers(string: str) -> list:
