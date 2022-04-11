@@ -1,3 +1,6 @@
+import matplotlib
+matplotlib.use('tkagg') # Needed for Tkinter compatability
+
 import matplotlib.pyplot as plt
 fig, ax = plt.subplots()
 
@@ -8,56 +11,78 @@ fig, ax = plt.subplots()
 # High school hashes would be at y = 28 and y = 52.
 # There are 8 steps between every yard line.
 
-# Define initial graph boundaries
+def football_field(x_coordinates: list, y_coordinates: list, auto_zoom: bool = True):
 
-plt.xlim(0, 160)
-plt.ylim(0, 80)
-ax.set_aspect(1)
+    # Graph the points and draw direction arrows
 
-# Draw yard lines
+    plt.plot(x_coordinates, y_coordinates, marker = '.')
 
-for i in range(1,21):
-    ax.axvline(x = i * 8)
+    for i in range(0, len(x_coordinates) - 1):
+        plt.quiver(x_coordinates[i], 
+        y_coordinates[i],
+        x_coordinates[i+1] - x_coordinates[i],
+        y_coordinates[i+1] - y_coordinates[i])
+    
+    # Draw yard lines
 
-# Draw hash lines
+    for i in range(1,21):
+        ax.axvline(x = i * 8)
 
-ax.axhline(y = 28, ls = '--')
-ax.axhline(y = 52, ls = '--')
+    # Draw hash lines
 
-# Label yard lines (Offset slightly left)
+    ax.axhline(y = 28, ls = '--')
+    ax.axhline(y = 52, ls = '--')
 
-for i in range(2, 12, 2):
-    # From 10 to 50
-    ax.text(i * 8, 14, str(i * 5), fontsize = 'small')
-    ax.text(i * 8, 68, str(i * 5), fontsize = 'small')
+    # Label yard lines
 
-for i in range(12, 20, 2):
-    # From 40 to 10
-    ax.text(i * 8, 14, str(100 - i * 5), fontsize = 'small')
-    ax.text(i * 8, 68, str(100 - i * 5), fontsize = 'small')
+    for i in range(2, 12, 2):
+        # From 10 to 50
+        ax.text(i * 8, 14, str(i * 5), fontsize = 'small')
+        ax.text(i * 8, 68, str(i * 5), fontsize = 'small')
 
-# Draw major grid (4 step intervals)
+    for i in range(12, 20, 2):
+        # From 40 to 10
+        ax.text(i * 8, 14, str(100 - i * 5), fontsize = 'small')
+        ax.text(i * 8, 68, str(100 - i * 5), fontsize = 'small')
+        
+    # Draw major grid (4 step intervals)
 
-ax.set_xticks(range(0, 160, 4))
-ax.set_yticks(range(0, 80, 4))
-ax.grid(which = 'major',
-        visible = True,
-        linewidth = 1)
+    ax.set_xticks(range(0, 160, 4))
+    ax.set_yticks(range(0, 80, 4))
+    ax.grid(which = 'major',
+            b = True,
+            visible = True,
+            linewidth = 1,
+            alpha = 0.5)
 
-# Draw minor grid (1 step intervals)
+    # Draw minor grid (1 step intervals)
 
-ax.set_xticks(range(0, 160, 1), minor = True)
-ax.set_yticks(range(0, 80, 1), minor = True)
-ax.grid(which = 'minor',
-        visible = True,
-        linewidth = 0.5,
-        alpha=.25)
+    ax.set_xticks(range(0, 160, 1), minor = True)
+    ax.set_yticks(range(0, 80, 1), minor = True)
+    ax.grid(which = 'minor',
+            visible = True,
+            linewidth = 0.5,
+            alpha = 0.25)
+    
+    # Hide ticks
 
-# Hide ticks
+    ax.axes.xaxis.set_ticklabels([])
+    ax.axes.yaxis.set_ticklabels([])
 
-ax.axes.xaxis.set_ticks([])
-ax.axes.yaxis.set_ticks([])
+    # Define boundaries
 
-# Show chart
+    if auto_zoom:
+        plt.xlim(min(x_coordinates) - 8, max(x_coordinates) + 8)
+        plt.ylim(min(y_coordinates) - 8, max(y_coordinates) + 8)
+    else:
+        plt.xlim(0, 160)
+        plt.ylim(0, 80)
 
-plt.show()
+    ax.set_aspect(1)
+
+
+    plt.show()
+
+
+if __name__ == '__main__':
+    print('This module is not meant to be executed as a program.')

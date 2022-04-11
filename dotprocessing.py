@@ -4,15 +4,17 @@
 def generate_h_dots(raw_text: str) -> list:
     h_dots = []
 
-    raw_text.strip('\n')
-    h_dots.append(raw_text.split('yd ln'))
+    raw_text = raw_text.strip('\n')
+    h_dots = raw_text.split('yd ln')
     return h_dots
 
 def generate_v_dots(raw_text: str) -> list:
     v_dots = []
 
-    raw_text.strip('\n')
-    v_dots.append(raw_text.split('(HS)'))
+    raw_text = raw_text.replace('line', '(HS)')
+    raw_text = raw_text.strip('\n')
+    v_dots = raw_text.split('(HS)')
+    
     return v_dots
 
 # Extracts the numbers from a string
@@ -62,7 +64,7 @@ def decode_y_coordinate(y_position: str) -> float:
 
     y_numbers = extract_numbers(y_position)
 
-    if 'Front side line' in y_position:
+    if 'Front side' in y_position:
         pass
     elif 'Front Hash' in y_position:
         y_coordinate += 28
@@ -79,3 +81,7 @@ def decode_y_coordinate(y_position: str) -> float:
         pass
 
     return y_coordinate
+
+
+if __name__ == '__main__':
+    print('This module is not meant to be executed as a program.')
