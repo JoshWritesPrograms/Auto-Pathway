@@ -5,8 +5,8 @@ from tkinter import *
 # Initialize main window
 
 window = Tk()
-
 window.title('Auto Pathway')
+window.resizable(False, False)
 
 Label(window,
       text = 'Copy and paste directly from your drill sheet'
@@ -32,6 +32,47 @@ Label(window, text = 'Front - Back').grid(row = 1, column = 2)
 y_input = Text(window, width = 20, height = 20)
 y_input.grid(row = 2, column = 2)
 
+# Customization checkboxes
+
+do_auto_zoom = BooleanVar(window)
+do_arrows = BooleanVar(window)
+
+do_auto_zoom.set(True)
+do_arrows.set(True)
+
+check_auto_zoom = Checkbutton(window,
+                             text = 'Auto Zoom',
+                             onvalue = True,
+                             offvalue = False,
+                             variable = do_auto_zoom)
+check_auto_zoom.grid(row = 3, column = 0, sticky = 'W')
+
+check_arrows = Checkbutton(window,
+                           text = 'Show Arrows',
+                           onvalue = True,
+                           offvalue = False,
+                           variable = do_arrows)
+check_arrows.grid(row = 4, column = 0, sticky = 'W')
+
+# Customization drop-down menus:
+
+valid_colors = ['Black',
+                'Red',
+                'Orange',
+                'Yellow',
+                'Green',
+                'Blue',
+                'Purple']
+
+line_color = StringVar(window)
+line_color.set('Blue')
+
+Label(window, text = 'Line Color:'
+     ).grid(row = 4, column = 1, sticky = 'E')
+
+color_selection = OptionMenu(window, line_color, *valid_colors)
+color_selection.grid(row = 4,column = 2, sticky='ew')
+
 # Main function (triggered by button)
 
 def generate_pathway():
@@ -51,7 +92,8 @@ def generate_pathway():
         v_coords.append(dp.decode_y_coordinate(position))
     
     try:
-        field.football_field(h_coords, v_coords)
+        field.football_field(h_coords, v_coords,
+        do_auto_zoom.get(), do_arrows.get(), line_color.get())
     except:
         throw_error()
 
@@ -60,6 +102,6 @@ Button(window,
        text = 'Generate',
        width = 6,
        command = generate_pathway
-       ).grid(row = 3, column = 1)
+       ).grid(row = 5, column = 1)
 
 window.mainloop()

@@ -11,19 +11,11 @@ fig, ax = plt.subplots()
 # High school hashes would be at y = 28 and y = 52.
 # There are 8 steps between every yard line.
 
-def football_field(x_coordinates: list, y_coordinates: list, auto_zoom: bool = True):
+def football_field(x_coordinates: list, y_coordinates: list,
+                   do_auto_zoom: bool = True, do_arrows: bool = True,
+                   line_color: str = 'red'):
 
-    # Graph the points and draw direction arrows
-
-    plt.plot(x_coordinates, y_coordinates, marker = '.')
-
-    for i in range(0, len(x_coordinates) - 1):
-        plt.quiver(x_coordinates[i], 
-        y_coordinates[i],
-        x_coordinates[i+1] - x_coordinates[i],
-        y_coordinates[i+1] - y_coordinates[i])
-    
-    # Draw yard lines
+    # Draw ard lines
 
     for i in range(1,21):
         ax.axvline(x = i * 8)
@@ -44,6 +36,21 @@ def football_field(x_coordinates: list, y_coordinates: list, auto_zoom: bool = T
         # From 40 to 10
         ax.text(i * 8, 14, str(100 - i * 5), fontsize = 'small')
         ax.text(i * 8, 68, str(100 - i * 5), fontsize = 'small')
+
+    # Graph the points
+
+    plt.plot(x_coordinates, y_coordinates, marker = '.', color = line_color)
+
+    # Draw direction arrows 
+
+    if do_arrows:
+        for i in range(0, len(x_coordinates) - 1):
+            plt.quiver(x_coordinates[i], 
+            y_coordinates[i],
+            x_coordinates[i+1] - x_coordinates[i],
+            y_coordinates[i+1] - y_coordinates[i])
+    
+
         
     # Draw major grid (4 step intervals)
 
@@ -71,7 +78,7 @@ def football_field(x_coordinates: list, y_coordinates: list, auto_zoom: bool = T
 
     # Define boundaries
 
-    if auto_zoom:
+    if do_auto_zoom:
         plt.xlim(min(x_coordinates) - 8, max(x_coordinates) + 8)
         plt.ylim(min(y_coordinates) - 8, max(y_coordinates) + 8)
     else:
