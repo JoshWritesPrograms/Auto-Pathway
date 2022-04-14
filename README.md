@@ -33,10 +33,10 @@ pip install Tkinter
 
 As of now, this software is in early alpha. The following features are planned:
 
-- Labelling points on the pathway with their set number and position
+- Labeling points on the pathway with their set number and position
 - Manual position entry
 - Support for labeling points of interest on the field (covers, prop responsibilities, etc.)
-- Customization
+- Support for other hash types
 
 ## Licensing
 
