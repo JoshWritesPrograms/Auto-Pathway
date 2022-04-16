@@ -2,6 +2,30 @@ import dotprocessing as dp
 import field
 from tkinter import *
 
+# Main function (triggered by button)
+
+def generate_pathway():
+    h_dots = dp.generate_h_dots(x_input.get('1.0', 'end-1c'))
+    v_dots = dp.generate_v_dots(y_input.get('1.0', 'end-1c'))
+    
+    h_dots.pop()
+    v_dots.pop()
+    
+    h_coords = []
+    v_coords = []
+    
+    for position in h_dots:
+        h_coords.append(dp.decode_x_coordinate(position))
+    
+    for position in v_dots:
+        v_coords.append(dp.decode_y_coordinate(position))
+    
+    try:
+        field.football_field(h_coords, v_coords,
+        do_auto_zoom.get(), do_arrows.get(), line_color.get())
+    except:
+        throw_error()
+
 # Initialize main window
 
 window = Tk()
@@ -73,30 +97,7 @@ Label(window, text = 'Line Color:'
 color_selection = OptionMenu(window, line_color, *valid_colors)
 color_selection.grid(row = 4,column = 2, sticky='ew')
 
-# Main function (triggered by button)
-
-def generate_pathway():
-    h_dots = dp.generate_h_dots(x_input.get('1.0', 'end-1c'))
-    v_dots = dp.generate_v_dots(y_input.get('1.0', 'end-1c'))
-    
-    h_dots.pop()
-    v_dots.pop()
-    
-    h_coords = []
-    v_coords = []
-    
-    for position in h_dots:
-        h_coords.append(dp.decode_x_coordinate(position))
-    
-    for position in v_dots:
-        v_coords.append(dp.decode_y_coordinate(position))
-    
-    try:
-        field.football_field(h_coords, v_coords,
-        do_auto_zoom.get(), do_arrows.get(), line_color.get())
-    except:
-        throw_error()
-
+# Go button
 
 Button(window,
        text = 'Generate',
