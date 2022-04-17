@@ -1,4 +1,4 @@
-# Converts text coppied and pasted from the PDF into
+# Converts text copied and pasted from the PDF into
 # a list of raw coords to be decoded.
 
 def generate_h_dots(raw_text: str) -> list:

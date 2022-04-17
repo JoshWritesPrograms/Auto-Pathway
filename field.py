@@ -22,7 +22,7 @@ def __right_yard_lines(x_position: float, y_position: float):
     fontsize = 'small')
 
 
-def football_field(x_coordinates: list, y_coordinates: list,
+def football_field(x_coordinates: list, y_coordinates: list, labels: list = [],
                    do_auto_zoom: bool = True, do_arrows: bool = True,
                    line_color: str = 'red'):
 
@@ -65,6 +65,12 @@ def football_field(x_coordinates: list, y_coordinates: list,
 
     plt.plot(x_coordinates, y_coordinates, marker = '.', color = line_color)
 
+    # Add labels
+
+    if labels != False:
+        for i in range(0, len(labels)):
+            plt.annotate(labels[i], (x_coordinates[i], y_coordinates[i]))
+
     # Draw direction arrows 
 
     if do_arrows:
@@ -72,7 +78,8 @@ def football_field(x_coordinates: list, y_coordinates: list,
             plt.quiver(x_coordinates[i], 
             y_coordinates[i],
             x_coordinates[i+1] - x_coordinates[i],
-            y_coordinates[i+1] - y_coordinates[i])
+            y_coordinates[i+1] - y_coordinates[i],
+            color = line_color)
     
     # Draw major grid (4 step intervals)
 
